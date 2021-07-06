@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block content %}
+
+    <h1 class="text-center text-5xl mb-8">Hello {{ name }}</h1>
+
+    {% verbatim  %}
+        <div id="app" class="grid grid-cols-1 mx-auto">
+
+        <form v-on:submit="createTask" class="mx-auto mb-8">
+            <div class="grid grid-cols-3 gap-4">
+                <div class="grid grid-cols-1 col-span-2">
+                    <label for="task-input">Task</label>
+                    <input id="task-input" type="text" class="p-1 border border-gray-300 rounded-md focus:border-blue-300" v-model="task">
+                </div>
+                <div class="col-span-1 flex content-end">
+                    <button class="px-3 py-1 bg-gray-500 text-white rounded-md mt-auto">Add task</button>
+                </div>
+            </div>
+        </form>
+
+        <button v-on:click="getTaskList" class="rounded-md px-3 py-1 bg-green-500 text-white">Get tasks</button>
+
+        <div class="grid grid-cols-3 border rounded-md px-1 py-2" v-for="task, index in tasks">
+            <div class="col-span-2" v-on:click.ctrl="completeTask(task)">
+                <p class="line-through" v-if="task.completed">{{ task.text }}</p>
+                <p v-else>{{ task.text }}</p>
+            </div>
+            <div class="flex col-span-1 justify-center">
+                <button v-on:click="deleteTask(task)" class="text-lg font-bold mx-auto">&times;</button>
+            </div>
+        </div>
+
+        </div>
+
+{% endverbatim  %}
+
+{% endblock content %}
